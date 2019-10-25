@@ -2,16 +2,15 @@
 
 [![Build Status](https://travis-ci.org/bertvv/ansible-role-bind.svg?branch=master)](https://travis-ci.org/bertvv/ansible-role-bind)
 
-An Ansible role for setting up BIND ISC as an **authoritative-only** or **caching-forwarding** DNS server for multiple domains on EL7 or Ubuntu Server. Specifically, the responsibilities of this role are to:
+An Ansible role for setting up BIND ISC as an **authoritative-only** DNS server for multiple domains on EL7 or Ubuntu Server. Specifically, the responsibilities of this role are to:
 
 - install BIND
 - set up the main configuration file
     - master server
     - slave server
 - set up forward and reverse lookup zone files
-- set up forwarded zone files.
 
-This role supports multiple forward and reverse zones, including for IPv6. Although enabling recursion is supported (albeit *strongly* discouraged).
+This role supports multiple forward and reverse zones, including for IPv6. Although enabling recursion is supported (albeit *strongly* discouraged), consider using another role if you want to set up a caching or forwarding name server.
 
 Configuring the firewall is not a concern of this role, so you should do this using another role (e.g. [bertvv.rh-base](https://galaxy.ansible.com/bertvv/rh-base/)).
 
@@ -32,6 +31,7 @@ Variables are not required, unless specified.
 | `bind_acls`                  | `[]`                 | A list of ACL definitions, which are dicts with fields `name` and `match_list`. See below for an example.                    |
 | `bind_allow_query`           | `['localhost']`      | A list of hosts that are allowed to query this DNS server. Set to ['any'] to allow all hosts                                 |
 | `bind_allow_recursion`       | `['any']`            | Similar to bind_allow_query, this option applies to recursive queries.                                                       |
+| `bind_allow_transfer`        | `[]`                 | A list of IPs or ACLs allowed to do zone transfers.                                                                          |
 | `bind_check_names`           | `[]`                 | Check host names for compliance with RFC 952 and RFC 1123 and take the defined action (e.g. `warn`, `ignore`, `fail`).       |
 | `bind_clear_slave_zones`     | `false`              | Determines if all zone files in the slaves directory should be cleared.                                                      |
 | `bind_controls`              | `[]`                 | A list of access controls for rndc utility, which are dicts with fields.  See example below for fields and usage.            |
@@ -523,7 +523,7 @@ You can include forward zones in your configuration by using bind_forwarded_zone
 bind_forwarded_zone_domains: [
   { name: example.com, view: EXTERNAL, forwarders: [ 100.100.1.1, 100.100.2.1 ], forward_only: true },
   { name: test.com, view: EXTERNAL, forwarders: [ 100.100.1.1, 100.100.2.1 ], forward_only: true },
-  { name: example.com, view: INTERNAL, forwarders: [ 192.168.1.1, 192.168.2.1 ], forward_only: false },
+  { name: example.com, view: INTERNAL, forwarders: [ 192.168.1.1, 192.168.2.1 ], forward only: false },
   { name: test.com, view: INTERNAL, forwarders: [ 10.168.1.1, 10.168.2.1 ] }
 ]
 ```
