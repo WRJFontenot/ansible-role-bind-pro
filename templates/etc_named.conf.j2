@@ -118,10 +118,8 @@ options {
 {% endif %}
 
   /* Transfers */
-{% if bind_views is not defined %}
-{% if bind_acls|length != 0 %}
-  allow-transfer  { {% for acl in bind_acls %}"{{ acl.name }}"; {% endfor %}};
-{% endif %}
+{% if bind_allow_transfer is defined and bind_views is not defined %}
+  allow-transfer { {{ bind_allow_transfer|join('; ') }}; }; 
 {% endif %}
 {% if bind_global_options.transfers is defined %}
 {% for option in bind_global_options.transfers %}
@@ -381,6 +379,7 @@ view "{{ bind_view.name }}" {
   /* Forward Zones */
 
 {% for bind_zone in bind_forwarded_zone_domains %}
+{% if bind_zone.view is defined and bind_zone.view == bind_view.name %}
   zone "{{ bind_zone.name }}" IN {
     type forward;
 {% if bind_zone.forward_only is defined %}
@@ -392,6 +391,7 @@ view "{{ bind_view.name }}" {
 {% endif %}
     forwarders { {{ bind_zone.forwarders|join('; ') }}; };
   };
+{% endif %}
 {% endfor %}
 {% endif %}
 

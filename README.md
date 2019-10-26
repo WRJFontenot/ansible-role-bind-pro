@@ -32,6 +32,7 @@ Variables are not required, unless specified.
 | `bind_acls`                  | `[]`                 | A list of ACL definitions, which are dicts with fields `name` and `match_list`. See below for an example.                    |
 | `bind_allow_query`           | `['localhost']`      | A list of hosts that are allowed to query this DNS server. Set to ['any'] to allow all hosts                                 |
 | `bind_allow_recursion`       | `['any']`            | Similar to bind_allow_query, this option applies to recursive queries.                                                       |
+| `bind_allow_transfer`        | `[]`                 | A list of IPs or ACLs allowed to do zone transfers.                                                                          |
 | `bind_check_names`           | `[]`                 | Check host names for compliance with RFC 952 and RFC 1123 and take the defined action (e.g. `warn`, `ignore`, `fail`).       |
 | `bind_clear_slave_zones`     | `false`              | Determines if all zone files in the slaves directory should be cleared.                                                      |
 | `bind_controls`              | `[]`                 | A list of access controls for rndc utility, which are dicts with fields.  See example below for fields and usage.            |

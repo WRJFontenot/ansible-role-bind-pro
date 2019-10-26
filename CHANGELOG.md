@@ -24,6 +24,7 @@ This file adheres to the guidelines of [http://keepachangelog.com/](http://keepa
 - Added support to enable rndc controls with variable `bind_enable_rndc_controls`. (credit: [Robbie Fontenot](https://github.com/WRJFontenot))
 - Added support to disable IPv6 support with variable `bind_disable_ipv6`. (credit: [Robbie Fontenot](https://github.com/WRJFontenot))
 - Added support to customize BIND global options with variable `bind_global_options`. (credit: [Robbie Fontenot](https://github.com/WRJFontenot))
+- Added support to define BIND allow-transfer with variable `bind_allow_transfer`. (credit: [Robbie Fontenot](https://github.com/WRJFontenot))
 
 ### Changed
 
